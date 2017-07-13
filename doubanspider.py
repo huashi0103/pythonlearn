@@ -32,8 +32,8 @@ def main():
 	while end>0:
 		test=input('请输入:')
 		if test=='q':
-                        end=0
-                        print('退出')
+            end=0
+            print('退出')
 		elif test=='a':
                         douban()
 		else:

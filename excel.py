@@ -1,6 +1,8 @@
 import xlrd
 import xlwt
+import os
 import re
+
 
 def createexcel():
     workbook=xlwt.Workbook()
@@ -56,10 +58,31 @@ def CreateSum():
         if(zhPattern.search(contents)):index=2
         for j in range(nc):
             newsheet.write(0,j,oldsheet.cell(index,j).value)
-    saveexcel(newworkbook,r'D:\WORK\Project\苗尾\合集.xls')         
+    saveexcel(newworkbook,r'D:\WORK\Project\苗尾\合集.xls')  
 
+def rwexcel():
+    path=r'C:\Users\huach\Desktop\右岸交通洞-渗压计.xlsx'
+    file=xlrd.open_workbook(path)#打开文件
+    sheet=file.sheet_by_index(0)#根据索引获取第一个sheet
+    #sheet=file.sheet_by_name('Pe1-1')
+    nc=sheet.ncols#获取sheet的列数
+    nr=sheet.nrows#sheet 行数
+
+    newbook=xlwt.Workbook()#新建一个excel对象
+    nsheet=newbook.add_sheet('testsheet',cell_overwrite_ok=True)#添加一个sheet
+    for i in range(20):
+        row=sheet.row_values(i)#获取第i行，这是个数组
+        for j in range(nc):
+            print(row[j],end='')
+            nsheet.write(i,j,row[j])#写到新的sheet里边
+        print()
+    newfile=r'C:\Users\huach\Desktop\test.xls'
+    if os.path.exists(newfile):os.remove(newfile)#有就删除了
+    newbook.save(newfile)#把新创建的excel对象保存
+
+    
 if __name__=='__main__':
-    CreateSum()
+    rwexcel()
 
 
 
